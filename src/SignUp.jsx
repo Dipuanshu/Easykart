@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 function SignUp({ setUser }) {
-  const nevigate = useNavigate();
   const [error, seterror] = useState();
   function LoginChecker(values) {
     axios
