@@ -1,7 +1,7 @@
 /** @format */
 
-import {React} from "react";
-import { Routes, Route} from "react-router-dom";
+import { React } from "react";
+import { Routes, Route } from "react-router-dom";
 import ProductDetail from "./ProductDetail";
 import Navbar from "./Navbar";
 import ProductlistPage from "./ProductlistPage";
@@ -33,13 +33,12 @@ function App() {
   //Local storage mai String ki from mai data save hota hai tabhi hamne json.parse() and json.stringfy() Pda.
 
   const [cart, setcart] = useState(savedData);
-//usestate mai jo data saved hai wo dalenge jisse intial wo hi dikhe//
+  //usestate mai jo data saved hai wo dalenge jisse intial wo hi dikhe//
   const path = window.location.pathname;
   function handletoCart(id, count) {
     const oldcount = cart[id] || 0;
     const newcart = { ...cart, [id]: oldcount + count };
     updateCart(newcart);
-
   }
   function updateCart(newcart) {
     setcart(newcart);
@@ -47,31 +46,76 @@ function App() {
     localStorage.setItem("my-cart", cartString);
   }
   const totalcount = Object.keys(cart).reduce(function (privious, current) {
-
     return privious + cart[current];
   }, 0);
- return (
-  <>
-    <UserProvider>
-      <AlertProvider>
-      
-        <div className="flex flex-col h-screen bg-slate-100 overflow-scroll">
-          <div className="grow">
-            <Routes>
-              <Route index element={<UserRoute><ProductlistPage productCount={totalcount} /></UserRoute>} />
-              <Route path="/products/:id/" element={<UserRoute><ProductDetail onAddToCart={handletoCart}  productCount={totalcount} /></UserRoute>} />
-              <Route path="/cart" element={<UserRoute><Cart cart={cart} updateCart={updateCart}/></UserRoute>} />
-              <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
-              <Route path="/signup" element={<AuthRoute><SignUp /></AuthRoute>} />
-              <Route path="/NoItem" element={<AuthRoute><NotItem /></AuthRoute>} />
-            </Routes>
+  return (
+    <>
+      <UserProvider>
+        <AlertProvider>
+          <div className="flex flex-col h-screen bg-slate-100 overflow-scroll">
+            <div className="grow">
+              <Routes>
+                <Route
+                  index
+                  element={
+                    <UserRoute>
+                      <ProductlistPage productCount={totalcount} />
+                    </UserRoute>
+                  }
+                />
+                <Route
+                  path="/products/:id/"
+                  element={
+                    <UserRoute>
+                      <ProductDetail
+                        onAddToCart={handletoCart}
+                        productCount={totalcount}
+                      />
+                    </UserRoute>
+                  }
+                />
+                <Route
+                  path="/cart"
+                  element={
+                    <UserRoute>
+                      <Cart cart={cart} updateCart={updateCart} />
+                    </UserRoute>
+                  }
+                />
+                <Route
+                  path="/login"
+                  element={
+                    <AuthRoute>
+                      <Login />
+                    </AuthRoute>
+                  }
+                />
+                <Route
+                  path="/signup"
+                  element={
+                    <AuthRoute>
+                      <SignUp />
+                    </AuthRoute>
+                  }
+                />
+                <Route
+                  path="/NoItem"
+                  element={
+                    <AuthRoute>
+                      <NotItem />
+                    </AuthRoute>
+                  }
+                />
+                <Route
+                  path="/Homepage"
+                  element={<ProductlistPage productCount={totalcount} />}
+                />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </AlertProvider>
-    </UserProvider>
-
-
+        </AlertProvider>
+      </UserProvider>
     </>
- );
+  );
 }
 export default App;

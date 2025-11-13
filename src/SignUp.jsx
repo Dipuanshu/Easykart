@@ -15,22 +15,24 @@ import { withUser } from "./WithProvider";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-function SignUp(props) {
+function SignUp({ setUser }) {
   const nevigate = useNavigate();
   const [error, seterror] = useState();
   function LoginChecker(values) {
     axios
-      .post("https://myeasykart.codeyogi.io/signup", {
+      .post("https://easykartbackend.onrender.com/register", {
         email: values.email,
         password: values.password,
-        fullName: values.userName,
+        name: values.userName,
       })
       .then((response) => {
-        const { user, token } = response.data;
-        localStorage.setItem("token", token);
-        nevigate("/Homepage");
+        localStorage.setItem("token", response.data.auth);
+        localStorage.setItem("user", response.data.result.email);
+        // nevigate("/Homepage"); // ✅ spelling fixed
+        setUser(response.data.result.name);
       })
       .catch((err) => {
+        console.error("Register error:", err);
         seterror("Email Already registered");
         setTimeout(() => {
           seterror(undefined);
