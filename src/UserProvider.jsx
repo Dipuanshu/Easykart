@@ -8,7 +8,6 @@ function UserProvider({ children }) {
   console.log("userProvide",user);
   const [loading, setLoadng] = useState(true);
   const token = localStorage.getItem("token");
-
   useEffect(() => {
     if (token) {
       axios
